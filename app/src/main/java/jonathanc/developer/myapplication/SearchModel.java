@@ -16,7 +16,6 @@ public class SearchModel implements Search.Model {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Log.d("JOHN", "Buscando en base de datos");
                 //una vez que realmente encontro el resultado, a travez de la intancia a presenter que recibimos como parametro en el constructor,
                 //notificamos al presenter la respuesta de la busqueda, esto sin la necesidad de conocer o tocar las responsabilidades del presenter
                 presenter.setQuery("El Libro Existe");
