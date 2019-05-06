@@ -14,10 +14,9 @@ public interface Search {
 
     interface Presenter {
         void makeQuery(Book book);
-        void setQuery(String response);
     }
 
     interface Model {
-        void getBook(String query);
+        String getBook(String query);
     }
 }
