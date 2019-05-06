@@ -1,6 +1,5 @@
 package jonathanc.developer.myapplication;
 
-//Objeto de tipo book el cual sera enviado para ser buscasdo en la base de datos de books
 public class Book {
 
     int currentPage;

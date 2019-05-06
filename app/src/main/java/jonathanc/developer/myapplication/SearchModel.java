@@ -6,14 +6,15 @@ import android.util.Log;
 public class SearchModel implements Search.Model {
 
     //la respuesta sera devuelta antes de que el tiempo de espera se cumpla
+    String res;
     @Override
     public String getBook(String query) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Log.d("JOHN", "Buscando en base de datos");
+               res="El Libro Existe";
             }
         }, 5000);
-        return "El Libro Existe";
+        return res;
     }
 }
