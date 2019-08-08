@@ -11,6 +11,7 @@ public class SearchPresenter implements interfaceSearch.Presenter {
     @Override
     public void prepareServiceCall() {
         view.startProgress();
+        //url = http://cardfindercdmx.com/personal/get_book.php
         new SearchModel(this).execute(BuildConfig.url);
     }
 
