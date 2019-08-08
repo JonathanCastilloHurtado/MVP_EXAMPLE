@@ -1,38 +1,30 @@
 package jonathanc.developer.myapplication;
 
-//implementamos los metodos(el comportamiento) de la interfaz Search que contiene la interfaz presenter
-public class SearchPresenter implements Search.Presenter {
+public class SearchPresenter implements interfaceSearch.Presenter {
 
-    Search.View view;
+    interfaceSearch.View view;
 
-    //recibimos la instancia de la clase contenedora de la interfaz y la asignamos a la intancia de esta clase
-    public SearchPresenter(Search.View view) {
+    public SearchPresenter(interfaceSearch.View view) {
         this.view = view;
     }
 
-    //metodos de la interfaz presenter
-
-    //metodo encargado de contruir el query para la busqueda de datos en el model
     @Override
-    public void makeQuery(Book book) {
-        String Query = "SELECT * FROM Books WHERE bookName = ";
-        Query += book.bookName;
-        //antes de realizar la llamada al model, inicializamos una accion en la UI la cual mandaremos llamar desde la intancia View que frecibimos,
-        //gracias a esto, no tendremos que encarganos de decirle que elementos UI/view tiene que usar el metodo, ya que la clase contenedora de la intancia view
-        // debe saber eso ya que esta en sus responsabilidades.
+    public void prepareServiceCall() {
         view.startProgress();
-        //en la creacion del objeto SearchModel, se le pasa como parametro la intancia de esta clase para que model pueda ocupar los metodos de esta clse
-        //sin la necesidad de interactuar con variables o responsabilidades de esta clase.
-        new SearchModel(this).getBook(Query);
+        new SearchModel(this).execute(BuildConfig.url);
     }
 
-    //este metodo sera disparado desde el model atraves de la instancia de esta clase
     @Override
-    public void setQuery(String result) {
-        //utilizando la instancia view que contiene esta clase, iteractuaremos con los metodos de view, pero sin la necesidad de conocer o meternos
-        //con sus responsabilidades o variables
+    public void setResponse(String result) {
         view.stopProgress();
         view.showResults(result);
     }
 
+    @Override
+    public void prepareError(Exception e) {
+     view.showError(e+"");
+    }
+
 }
+
+

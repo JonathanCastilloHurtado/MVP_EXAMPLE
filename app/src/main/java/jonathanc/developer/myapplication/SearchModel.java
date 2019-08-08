@@ -1,25 +1,71 @@
 package jonathanc.developer.myapplication;
 
-import android.os.Handler;
-import android.util.Log;
-//implementamos los metodos(el comportamiento) de la interfaz Search que contiene la interfaz Model
-public class SearchModel implements Search.Model {
-    Search.Presenter presenter;
-    //recibimos la instancia de la clase contenedora de la interfaz y la asignamos a la intancia de esta clase
-    SearchModel(Search.Presenter presenter) {
+import android.os.AsyncTask;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
+public class SearchModel extends AsyncTask<Object, String, String> implements interfaceSearch.Model {
+    interfaceSearch.Presenter presenter;
+    private String reqURL;
+
+    SearchModel(interfaceSearch.Presenter presenter) {
         this.presenter = presenter;
     }
-    //metodos de la interfaz Model
+
     @Override
-    public void getBook(String query) {
-        //este handler simulara el tiempo de respuesta de la busqueda en la base de datos
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                //una vez que realmente encontro el resultado, a travez de la intancia a presenter que recibimos como parametro en el constructor,
-                //notificamos al presenter la respuesta de la busqueda, esto sin la necesidad de conocer o tocar las responsabilidades del presenter
-                presenter.setQuery("El Libro Existe");
+    protected String doInBackground(Object... objects) {
+        reqURL = objects[0].toString();
+        makeServiceCall();
+        return null;
+    }
+
+    @Override
+    public void makeServiceCall() {
+        String response;
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line).append('\n');
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                presenter.prepareError(e);
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    presenter.prepareError(e);
+                }
             }
-        }, 5000);
+            response = stringBuilder.toString();
+            presenter.setResponse(response);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            presenter.prepareError(e);
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            presenter.prepareError(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            presenter.prepareError(e);
+        }
     }
 }
+

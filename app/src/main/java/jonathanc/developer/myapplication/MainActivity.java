@@ -1,49 +1,81 @@
 package jonathanc.developer.myapplication;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-//implementamos los metodos de la interface View la cual se encuentra dentro de la interface Search
-public class MainActivity extends AppCompatActivity implements Search.View {
-    //creamos el objeto de tipo SearchPresenter
-    SearchPresenter mSearchPresenter;
-    //intanciamos elementos view/UI los cuales seran disparados desde el presenter
-    TextView textView;
-    ProgressDialog progressDialog;
+
+public class MainActivity extends AppCompatActivity implements interfaceSearch.View, View.OnClickListener {
+
+    SearchPresenter presenter;
+    private TextView textView;
+    private Button button;
+    private ProgressDialog progressDialog;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //inicializamos
         textView = (TextView) findViewById(R.id.mTexto);
-        progressDialog = new ProgressDialog(this);
-        //al momento de inicializar el objeto SearchPresneter le pasamos la instancia de la interfaz de esta clase
-        mSearchPresenter = new SearchPresenter(this);
+        button = (Button) findViewById(R.id.consume);
 
-        //el objeto de tipo SearchPresenter dispara su metodo
-        mSearchPresenter.makeQuery(new Book(10, false, "Señor de los anillos"));
+        button.setOnClickListener(this);
+        progressDialog = new ProgressDialog(this);
+        activity = this;
+        presenter = new SearchPresenter(this);
     }
 
-    //estos metodos seran disparados/llamados desde el presenter a travez de la instancia de la interfaz de esta clase
     @Override
-    public void showResults(String Result) {
-        textView.setText(Result);
+    public void showResults(final String Result) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                textView.setText(Result);
+            }
+        });
     }
 
     @Override
     public void startProgress() {
-        progressDialog.setTitle("CARGANDO...");
-        progressDialog.setProgress(0);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        runOnUiThread(new Runnable() {
+            public void run() {
+                //progress_label = Loading...
+                progressDialog.setTitle(getResources().getString(R.string.progress_label));
+                progressDialog.setProgress(0);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+            }
+        });
+
     }
 
     @Override
     public void stopProgress() {
-        progressDialog.cancel();
-        progressDialog.dismiss();
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressDialog.cancel();
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
+    @Override
+    public void showError(final String error) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        presenter.prepareServiceCall();
     }
 }
