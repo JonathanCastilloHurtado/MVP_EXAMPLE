@@ -18,6 +18,7 @@ import jonathanc.developer.myapplication.interfaceSearch;
 public class SearchModel extends AsyncTask<Object, String, NetworkResponse> implements interfaceSearch.Model {
     interfaceSearch.Presenter presenter;
     private String reqURL;
+    private final String urlEndpoint="personal/get_book.php";
 
     public SearchModel(interfaceSearch.Presenter presenter) {
         this.presenter = presenter;
@@ -35,7 +36,7 @@ public class SearchModel extends AsyncTask<Object, String, NetworkResponse> impl
 
     @Override
     protected NetworkResponse doInBackground(Object... objects) {
-        reqURL = objects[0].toString();
+        reqURL = objects[0].toString()+urlEndpoint;
         return makeServiceCall();
     }
 

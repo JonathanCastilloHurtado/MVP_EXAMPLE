@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 public class MainActivity extends AppCompatActivity implements interfaceSearch.View, View.OnClickListener {
 
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements interfaceSearch.V
     }
 
     @Override
-    public void showResults(final String Result) {
+    public void showResults(String Result) {
         textView.setText(Result);
     }
 
@@ -52,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements interfaceSearch.V
     }
 
     @Override
-    public void showError(final String error) {
-        Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
+    public void showError(String error) {
+        textView.setText(error);
     }
 
     @Override

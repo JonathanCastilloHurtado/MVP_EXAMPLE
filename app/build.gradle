@@ -14,7 +14,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "url", "\"http://cardfindercdmx.com/personal/get_book.php\""
+            buildConfigField "String", "url", "\"http://cardfindercdmx.com/\""
         }
     }
 }
