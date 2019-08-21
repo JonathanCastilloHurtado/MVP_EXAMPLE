@@ -33,33 +33,27 @@ public class MainActivity extends AppCompatActivity implements interfaceSearch.V
 
     @Override
     public void showResults(final String Result) {
-                textView.setText(Result);
-
+        textView.setText(Result);
     }
 
     @Override
     public void startProgress() {
-                //progress_label = Loading...
-                progressDialog.setTitle(getResources().getString(R.string.progress_label));
-                progressDialog.setProgress(0);
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-
+        //progress_label = Loading...
+        progressDialog.setTitle(getResources().getString(R.string.progress_label));
+        progressDialog.setProgress(0);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
     public void stopProgress() {
-                progressDialog.cancel();
-                progressDialog.dismiss();
-
-
+        progressDialog.cancel();
+        progressDialog.dismiss();
     }
 
     @Override
     public void showError(final String error) {
-
-                Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
-
+        Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
     }
 
     @Override
