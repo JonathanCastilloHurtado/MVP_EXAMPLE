@@ -1,5 +1,7 @@
 package jonathanc.developer.myapplication;
 
+import jonathanc.developer.myapplication.Model.NetworkResponse;
+
 public interface interfaceSearch {
 
     interface View {
@@ -16,6 +18,6 @@ public interface interfaceSearch {
     }
 
     interface Model {
-        void makeServiceCall();
+        NetworkResponse makeServiceCall();
     }
 }

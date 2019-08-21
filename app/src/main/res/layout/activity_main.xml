@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
     <!--default_text = Click the button bellow in order to start the Api\'s request-->
     <TextView
         android:id="@+id/mTexto"
@@ -23,5 +22,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_text" />
-
 </LinearLayout>

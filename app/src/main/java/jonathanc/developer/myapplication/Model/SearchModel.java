@@ -1,4 +1,4 @@
-package jonathanc.developer.myapplication;
+package jonathanc.developer.myapplication.Model;
 
 import android.os.AsyncTask;
 
@@ -13,24 +13,35 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class SearchModel extends AsyncTask<Object, String, String> implements interfaceSearch.Model {
+import jonathanc.developer.myapplication.interfaceSearch;
+
+public class SearchModel extends AsyncTask<Object, String, NetworkResponse> implements interfaceSearch.Model {
     interfaceSearch.Presenter presenter;
     private String reqURL;
 
-    SearchModel(interfaceSearch.Presenter presenter) {
+    public SearchModel(interfaceSearch.Presenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    protected String doInBackground(Object... objects) {
-        reqURL = objects[0].toString();
-        makeServiceCall();
-        return null;
+    protected void onPostExecute(NetworkResponse response) {
+        super.onPostExecute(response);
+        if (response != null && response.isSuccess()) {
+            presenter.setResponse(response.getMessage());
+        } else {
+            presenter.prepareError(response.getException());
+        }
     }
 
     @Override
-    public void makeServiceCall() {
-        String response;
+    protected NetworkResponse doInBackground(Object... objects) {
+        reqURL = objects[0].toString();
+        return makeServiceCall();
+    }
+
+    @Override
+    public NetworkResponse makeServiceCall() {
+        NetworkResponse response = new NetworkResponse();
         try {
             URL url = new URL(reqURL);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -45,27 +56,33 @@ public class SearchModel extends AsyncTask<Object, String, String> implements in
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                presenter.prepareError(e);
+                response.setSuccess(false);
+                response.setException(e);
             } finally {
                 try {
                     in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    presenter.prepareError(e);
+                    response.setSuccess(false);
+                    response.setException(e);
                 }
             }
-            response = stringBuilder.toString();
-            presenter.setResponse(response);
+            response.setSuccess(true);
+            response.setMessage(stringBuilder.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            presenter.prepareError(e);
+            response.setSuccess(false);
+            response.setException(e);
         } catch (ProtocolException e) {
             e.printStackTrace();
-            presenter.prepareError(e);
+            response.setSuccess(false);
+            response.setException(e);
         } catch (IOException e) {
             e.printStackTrace();
-            presenter.prepareError(e);
+            response.setSuccess(false);
+            response.setException(e);
         }
+        return response;
     }
 }
 

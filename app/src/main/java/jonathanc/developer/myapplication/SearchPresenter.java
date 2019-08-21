@@ -1,5 +1,7 @@
 package jonathanc.developer.myapplication;
 
+import jonathanc.developer.myapplication.Model.SearchModel;
+
 public class SearchPresenter implements interfaceSearch.Presenter {
 
     interfaceSearch.View view;
@@ -23,7 +25,8 @@ public class SearchPresenter implements interfaceSearch.Presenter {
 
     @Override
     public void prepareError(Exception e) {
-     view.showError(e+"");
+        view.stopProgress();
+        view.showError(e + "");
     }
 
 }
