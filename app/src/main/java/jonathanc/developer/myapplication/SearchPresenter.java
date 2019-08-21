@@ -13,7 +13,7 @@ public class SearchPresenter implements interfaceSearch.Presenter {
     @Override
     public void prepareServiceCall() {
         view.startProgress();
-        //url = http://cardfindercdmx.com/personal/get_book.php
+        //url = http://cardfindercdmx.com/
         new SearchModel(this).execute(BuildConfig.url);
     }
 
@@ -26,7 +26,7 @@ public class SearchPresenter implements interfaceSearch.Presenter {
     @Override
     public void prepareError(Exception e) {
         view.stopProgress();
-        view.showError(e + "");
+        view.showError(e.toString());
     }
 
 }
