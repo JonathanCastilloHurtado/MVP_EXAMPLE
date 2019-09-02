@@ -11,7 +11,14 @@ public class SearchModel implements Search.Model {
     }
     //metodos de la interfaz Model
     @Override
-    public void getBook(String query) {
+    public void getBookByName(String bookName) {
+        /**
+         * Gerus - Aquí va el quey
+         * String Query = "SELECT * FROM Books WHERE bookName = ";
+         * Cambia el handle por la petición como el MVC
+         * - Los strings harcodeados, etc ...
+         * - Cambiar por asyntask como te había comentado.
+         */
         //este handler simulara el tiempo de respuesta de la busqueda en la base de datos
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

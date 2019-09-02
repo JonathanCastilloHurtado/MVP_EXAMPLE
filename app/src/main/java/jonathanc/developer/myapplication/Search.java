@@ -18,6 +18,10 @@ public interface Search {
     }
 
     interface Model {
-        void getBook(String query);
+
+        /**
+         * Gerus - Se renombro el método
+         */
+        void getBookByName(String bookName);
     }
 }

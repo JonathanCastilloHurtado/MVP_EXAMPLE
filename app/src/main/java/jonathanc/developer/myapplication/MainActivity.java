@@ -8,7 +8,10 @@ import android.widget.TextView;
 //implementamos los metodos de la interface View la cual se encuentra dentro de la interface Search
 public class MainActivity extends AppCompatActivity implements Search.View {
     //creamos el objeto de tipo SearchPresenter
-    SearchPresenter mSearchPresenter;
+    /**
+     * Gerus - Solo debes de implementar la interfaz y no el objeto completo.
+     */
+    Search.Presenter mSearchPresenter;
     //intanciamos elementos view/UI los cuales seran disparados desde el presenter
     TextView textView;
     ProgressDialog progressDialog;
@@ -24,10 +27,13 @@ public class MainActivity extends AppCompatActivity implements Search.View {
         mSearchPresenter = new SearchPresenter(this);
 
         //el objeto de tipo SearchPresenter dispara su metodo
+        /**
+         * Gerus -  Variables el 10 no se entiende y los strings no harcodeados
+         */
         mSearchPresenter.makeQuery(new Book(10, false, "Señor de los anillos"));
     }
 
-    //estos metodos seran disparados/llamados desde el presenter a travez de la instancia de la interfaz de esta clase
+    //estos metodos seran disparados/llamados desde el presenter a través de la instancia de la interfaz de esta clase
     @Override
     public void showResults(String Result) {
         textView.setText(Result);
@@ -35,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements Search.View {
 
     @Override
     public void startProgress() {
+        /**
+         * Gerus - String igual que MVC
+         */
         progressDialog.setTitle("CARGANDO...");
         progressDialog.setProgress(0);
         progressDialog.setCancelable(false);
