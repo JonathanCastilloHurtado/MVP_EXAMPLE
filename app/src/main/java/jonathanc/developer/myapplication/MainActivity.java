@@ -1,6 +1,5 @@
 package jonathanc.developer.myapplication;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ public class MainActivity extends AppCompatActivity implements interfaceSearch.V
     private TextView textView;
     private Button button;
     private ProgressDialog progressDialog;
-    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements interfaceSearch.V
 
         button.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
-        activity = this;
         presenter = new SearchPresenter(this);
     }
 

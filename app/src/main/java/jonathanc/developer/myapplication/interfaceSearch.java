@@ -18,6 +18,6 @@ public interface interfaceSearch {
     }
 
     interface Model {
-        NetworkResponse makeServiceCall();
+        NetworkResponse makeServiceCall(String reqURL);
     }
 }
