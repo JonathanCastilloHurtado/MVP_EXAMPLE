@@ -14,7 +14,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "url", "\"http://cardfindercdmx.com/\""
+            buildConfigField "String", "url", "\"http://johncastle.com.mx/\""
         }
     }
 }

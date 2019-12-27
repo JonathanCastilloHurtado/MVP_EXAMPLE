@@ -13,8 +13,8 @@ public class SearchPresenter implements interfaceSearch.Presenter {
     @Override
     public void prepareServiceCall() {
         view.startProgress();
-        final String urlEndpoint="personal/get_book.php";
-        //url = http://cardfindercdmx.com/
+        final String urlEndpoint="apis/get_book.php";
+        //url = http://johncastle.com.mx/
         new SearchModel(this).execute(BuildConfig.url+urlEndpoint);
     }
 
