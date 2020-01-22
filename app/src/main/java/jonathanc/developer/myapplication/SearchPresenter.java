@@ -1,5 +1,8 @@
 package jonathanc.developer.myapplication;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import jonathanc.developer.myapplication.Model.SearchModel;
 
 public class SearchPresenter implements interfaceSearch.Presenter {
@@ -10,6 +13,7 @@ public class SearchPresenter implements interfaceSearch.Presenter {
         this.view = view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     @Override
     public void prepareServiceCall() {
         view.startProgress();
